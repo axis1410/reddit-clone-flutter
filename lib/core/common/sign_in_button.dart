@@ -25,9 +25,11 @@ class SignInButton extends StatelessWidget {
           ),
         ),
         label: const Text(
+          // style the text to look sexy
           'Continue with google',
           style: TextStyle(
             fontSize: 18,
+            fontWeight: FontWeight.w600,
           ),
         ),
       ),
