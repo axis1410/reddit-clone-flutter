@@ -11,7 +11,6 @@ import '../../../core/providers/firebase_providers.dart';
 
 import '../../../models/user_model.dart';
 
-
 final authRepositoryProvider = Provider(
   (ref) => AuthRepository(
     firestore: ref.read(firestoreProvider),
@@ -34,6 +33,8 @@ class AuthRepository {
         _googleSignIn = googleSignIn;
 
   CollectionReference get _users => _firestore.collection('users');
+
+  Stream<User?> get authStateChange => _auth.authStateChanges();
 
   FutureEither<UserModel> signInWithGoogle() async {
     try {
@@ -72,10 +73,9 @@ class AuthRepository {
   }
 
   Stream<UserModel> getUserData(String uid) {
-    return _users.doc(uid).snapshots().map(
-          (event) => UserModel.fromMap(
-            event.data() as Map<String, dynamic>,
-          ),
-        );
+    return _users
+        .doc(uid)
+        .snapshots()
+        .map((event) => UserModel.fromMap(event.data() as Map<String, dynamic>));
   }
 }
