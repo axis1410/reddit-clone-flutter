@@ -3,7 +3,7 @@ import 'package:routemaster/routemaster.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
- 
+
 import './router.dart';
 import './theme/pallete.dart';
 import './firebase_options.dart';
@@ -56,7 +56,9 @@ class _MyAppState extends ConsumerState<MyApp> {
             ),
             routeInformationParser: const RoutemasterParser(),
           ),
-          error: (error, stackTrace) => ErrorText(error: error.toString()),
+          error: (error, stackTrace) => ErrorText(
+            error: error.toString(),
+          ),
           loading: () => const Loader(),
         );
   }
