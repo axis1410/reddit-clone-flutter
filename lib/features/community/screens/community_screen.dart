@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:reddit_clone_flutter/features/auth/controller/auth_controller.dart';
 import 'package:routemaster/routemaster.dart';
 
 import '../../../features/community/controller/community_controller.dart';
+import '../../../features/auth/controller/auth_controller.dart';
 
 import '../../../core/common/error_text.dart';
 import '../../../core/common/loader.dart';
