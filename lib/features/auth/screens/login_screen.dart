@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:reddit_clone_flutter/core/common/loader.dart';
-import 'package:reddit_clone_flutter/features/auth/controller/auth_controller.dart';
 
+import '../../../features/auth/controller/auth_controller.dart';
+
+import '../../../core/common/loader.dart';
 import '../../../core/common/sign_in_button.dart';
 import '../../../core/constants/constants.dart';
 

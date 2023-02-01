@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:routemaster/routemaster.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:reddit_clone_flutter/features/auth/controller/auth_controller.dart';
-import 'package:reddit_clone_flutter/theme/pallete.dart';
+
+import '../../../theme/pallete.dart';
+
+import '../../../features/auth/controller/auth_controller.dart';
 
 class ProfileDrawer extends ConsumerWidget {
   const ProfileDrawer({super.key});
@@ -10,9 +13,14 @@ class ProfileDrawer extends ConsumerWidget {
     ref.read(authControlProvider.notifier).logOut();
   }
 
+  void navigateToUserProfile(BuildContext context, String uid) {
+    Routemaster.of(context).push('/u/$uid');
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final user = ref.watch(userProvider)!;
+
     return Drawer(
       child: SafeArea(
         child: Column(
@@ -36,7 +44,11 @@ class ProfileDrawer extends ConsumerWidget {
               padding: EdgeInsets.symmetric(horizontal: 15),
               child: Divider(color: Colors.grey, thickness: 0.1),
             ),
-            ListTile(title: Text('View Profile'), leading: Icon(Icons.person), onTap: null),
+            ListTile(
+              title: const Text('View Profile'),
+              leading: const Icon(Icons.person),
+              onTap: () => navigateToUserProfile(context, user.uid),
+            ),
             ListTile(
               title: const Text('Log Out'),
               leading: Icon(Icons.logout, color: Pallete.redColor),

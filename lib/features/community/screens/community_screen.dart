@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:reddit_clone_flutter/models/community_model.dart';
 import 'package:routemaster/routemaster.dart';
 
 import '../../../features/community/controller/community_controller.dart';
@@ -18,6 +19,10 @@ class CommunityScreen extends ConsumerWidget {
 
   void navigateToModTools(BuildContext context) {
     Routemaster.of(context).push('/mod-tools/$name');
+  }
+
+  void joinCommunity(WidgetRef ref, Community community, BuildContext context) {
+    ref.read(communityControllerProvider.notifier).joinCommunity(community, context);
   }
 
   @override
@@ -80,7 +85,7 @@ class CommunityScreen extends ConsumerWidget {
                                       child: const Text('Mod Options'),
                                     )
                                   : OutlinedButton(
-                                      onPressed: () {},
+                                      onPressed: () => joinCommunity(ref, community, context),
                                       style: ElevatedButton.styleFrom(
                                         shape: RoundedRectangleBorder(
                                           borderRadius: BorderRadius.circular(20),
@@ -88,7 +93,7 @@ class CommunityScreen extends ConsumerWidget {
                                         padding: const EdgeInsets.symmetric(horizontal: 25),
                                       ),
                                       child: Text(
-                                        community.members.contains(user.uid) ? 'Join' : 'Joined',
+                                        community.members.contains(user.uid) ? 'Joined' : 'Join',
                                       ),
                                     ),
                             ],
@@ -104,7 +109,9 @@ class CommunityScreen extends ConsumerWidget {
                                 fontWeight: FontWeight.w500,
                               ),
                             ),
-                          )
+                          ),
+                          const SizedBox(height: 10),
+                          const Divider(thickness: 2)
                         ],
                       ),
                     ),

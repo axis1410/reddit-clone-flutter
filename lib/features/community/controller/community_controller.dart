@@ -1,8 +1,11 @@
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
+import 'package:fpdart/fpdart.dart';
 import 'package:routemaster/routemaster.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import '../../../core/failure.dart';
 
 import '../../../models/community_model.dart';
 
@@ -82,6 +85,26 @@ class CommunityController extends StateNotifier<bool> {
     return _communityRepository.getCommunityByName(name);
   }
 
+  void joinCommunity(Community community, BuildContext context) async {
+    final user = _ref.read(userProvider)!;
+
+    Either<Failure, void> res;
+
+    if (community.members.contains(user.uid)) {
+      res = await _communityRepository.leaveCommunity(community.name, user.uid);
+    } else {
+      res = await _communityRepository.joinCommunity(community.name, user.uid);
+    }
+
+    res.fold((l) => showSnackBar(context, l.message), (r) {
+      if (community.members.contains(user.uid)) {
+        showSnackBar(context, 'Community left successfully');
+      } else {
+        showSnackBar(context, 'Community joined successfully');
+      }
+    });
+  }
+
   void editCommunity({
     required File? profileFile,
     required File? bannerFile,
@@ -119,10 +142,13 @@ class CommunityController extends StateNotifier<bool> {
 
     state = false;
 
-    res.fold(
-      (l) => showSnackBar(context, l.message),
-      (r) => Routemaster.of(context).pop(),
-    );
+    res.fold((l) => showSnackBar(context, l.message), (r) => Routemaster.of(context).pop());
+  }
+
+  void addMods(String communityName, List<String> uid, BuildContext context) async {
+    final res = await _communityRepository.addMods(communityName, uid);
+
+    res.fold((l) => showSnackBar(context, l.message), (r) => Routemaster.of(context).pop());
   }
 
   Stream<List<Community>> searchCommunity(String query) {

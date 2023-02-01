@@ -1,7 +1,7 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:reddit_clone_flutter/core/utils.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../models/user_model.dart';
 import '../repository/auth_repository.dart';
